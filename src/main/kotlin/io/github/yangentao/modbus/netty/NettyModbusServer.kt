@@ -5,7 +5,7 @@ import io.github.yangentao.modbus.service.BusApp
 import io.github.yangentao.types.patternText
 import io.netty.channel.socket.SocketChannel
 
-class ModbusNettyServer(val app: BusApp, port: Int) : BaseNettyServer(port) {
+class NettyModbusServer(val app: BusApp, port: Int) : BaseNettyServer(port) {
     // share
     private val handler = BusHandler(app.endpoint, app.slaves, app.identName, app.autoQueryDelaySeconds)
     private val msgDecoder: BusMessageDecoder? = if (app.identMessage != null || app.messages.isNotEmpty()) {
