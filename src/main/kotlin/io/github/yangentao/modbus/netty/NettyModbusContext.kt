@@ -1,10 +1,11 @@
 package io.github.yangentao.modbus.netty
 
+import io.github.yangentao.modbus.service.BusApp
 import io.github.yangentao.modbus.service.BusContext
 import io.netty.buffer.Unpooled
 import io.netty.channel.ChannelHandlerContext
 
-class NettyModbusContext(val context: ChannelHandlerContext) : BusContext() {
+class NettyModbusContext(app: BusApp, val context: ChannelHandlerContext) : BusContext(app) {
     override val isActive: Boolean get() = context.channel().isActive
 
     override fun closeSync() {

@@ -16,7 +16,7 @@ plugins {
 
 group = "io.github.yangentao"
 
-version = "1.0.6"
+version = "1.0.7"
 val artifactName = "modbusnetty"
 val githubLib = "modbusnetty"
 val descLib = "Java/Kotlin Modbus, Netty."
@@ -33,7 +33,7 @@ dependencies {
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib"))
     api("io.netty:netty-all:4.1.119.Final")
-    api("io.github.yangentao:modbus:[1.0.6,)")
+    api("io.github.yangentao:modbus:[1.0.7,)")
 }
 
 tasks.test {

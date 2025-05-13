@@ -2,10 +2,7 @@
 
 package io.github.yangentao.modbus.netty
 
-import io.github.yangentao.modbus.service.BusEndpoint
-import io.github.yangentao.modbus.service.BusMessage
-import io.github.yangentao.modbus.service.IDBusMessage
-import io.github.yangentao.modbus.service.ModbusFrame
+import io.github.yangentao.modbus.service.*
 import io.github.yangentao.types.createInstanceX
 import io.github.yangentao.types.printX
 import io.netty.channel.ChannelHandler
@@ -14,7 +11,10 @@ import io.netty.channel.SimpleChannelInboundHandler
 import kotlin.reflect.KClass
 
 @ChannelHandler.Sharable
-class BusHandler(val endpointClass: KClass<out BusEndpoint>, val slaves: HashSet<Int>, val identName: String?, val autoQueryDelaySeconds: Int?) : SimpleChannelInboundHandler<ModbusFrame>() {
+class BusHandler(val app: BusApp) : SimpleChannelInboundHandler<ModbusFrame>() {
+    val endpointClass: KClass<out BusEndpoint> get() = app.endpoint
+    val slaves: HashSet<Int> get() = app.slaves
+    val identName: String? get() = app.identName
 
     override fun channelRead0(ctx: ChannelHandlerContext, msg: ModbusFrame) {
         val m = ctx.endpoint ?: return
@@ -42,10 +42,9 @@ class BusHandler(val endpointClass: KClass<out BusEndpoint>, val slaves: HashSet
     }
 
     override fun channelActive(ctx: ChannelHandlerContext) {
-        val inst: BusEndpoint = endpointClass.createInstanceX(NettyModbusContext(ctx)) ?: return
+        val inst: BusEndpoint = endpointClass.createInstanceX(NettyModbusContext(app, ctx)) ?: return
         ctx.endpoint = inst
         inst.slaves = slaves
-        inst.autoQueryDelaySeconds = autoQueryDelaySeconds
         inst.identName = identName
         inst.onCreate()
         super.channelActive(ctx)
