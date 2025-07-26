@@ -7,7 +7,7 @@ buildscript {
     }
 }
 plugins {
-    kotlin("jvm") version "2.1.20"
+    kotlin("jvm") version "2.2.0"
     signing
     id("maven-publish")
     id("org.jetbrains.dokka") version "2.0.0"
@@ -16,7 +16,7 @@ plugins {
 
 group = "io.github.yangentao"
 
-version = "1.1.0"
+version = "2.0.0"
 val artifactName = "modbusnetty"
 val githubLib = "modbusnetty"
 val descLib = "Java/Kotlin Modbus, Netty."
@@ -33,7 +33,7 @@ dependencies {
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib"))
     api("io.netty:netty-all:4.1.119.Final")
-    api("io.github.yangentao:modbus:[1.1.0,)")
+    api("io.github.yangentao:modbus:[2.0.0,)")
 }
 
 tasks.test {
